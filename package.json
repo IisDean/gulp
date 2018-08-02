@@ -14,11 +14,13 @@
   },
   "dependencies": {
     "browser-sync": "^2.24.6",
+    "del": "^3.0.0",
     "gulp-cache": "^1.0.2",
     "gulp-if": "^2.0.2",
     "gulp-imagemin": "^4.1.0",
     "gulp-minify-css": "^1.2.4",
     "gulp-sass": "^4.0.1",
-    "gulp-uglify": "^3.0.1"
+    "gulp-uglify": "^3.0.1",
+    "run-sequence": "^2.2.1"
   }
 }

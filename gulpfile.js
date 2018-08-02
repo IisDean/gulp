@@ -9,7 +9,9 @@ var gulp = require('gulp'),
     gulpIf = require('gulp-if'),//
     minifyCss = require('gulp-minify-css'),//css压缩
     imagemin = require('gulp-imagemin'),//图片压缩
-    cache = require('gulp-cache');//
+    cache = require('gulp-cache'),//
+    del = require('del'),//删除
+    runSequence = require('run-sequence');//运行顺序
 
 gulp.task('sass', function () {
     //scass编译
@@ -23,7 +25,7 @@ gulp.task('sass', function () {
 
 gulp.task('browserSync',function(){
     //浏览器刷新
-    browserSync({
+    return browserSync({
         server: {
             baseDir: 'app'
         }
@@ -52,3 +54,21 @@ gulp.task('imagemin',function(){
         })))
         .pipe(gulp.dest('dist/images'));
 });
+
+gulp.task('clean',function(callback){
+//删除
+    del('dist');
+    return cache.clearAll(callback);
+});
+
+gulp.task('clean:dist',function(callback){
+    return del(['dist/**/*','!dist/images','!dist/images/**/*'],callback);
+});
+
+gulp.task('build',function(){
+    runSequence('clean:dist',['sass','useref','imagemin']);
+});
+
+gulp.task('default',function(){
+    runSequence(['sass','browserSync','watch']);
+})
